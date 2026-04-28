@@ -1,0 +1,65 @@
+const fs = require("fs");
+
+const products = JSON.parse(fs.readFileSync(`./products.json`));
+console.log(products);
+
+exports.getAllProduct = (req, res) => {
+  res.status(200).json({
+    status: "success",
+    size: products.length,
+    data: products,
+  });
+};
+
+exports.createProduct = (req, res) => {
+  var reqProduct = req.body; //object
+  console.log(reqProduct);
+  const id = products[products.length - 1].id + 1;
+  const newProduct = { id, ...reqProduct };
+  products.push(newProduct);
+  fs.writeFileSync(`./products.json`, JSON.stringify(products)); //update produts.json
+  res.status(200).json({
+    status: "success",
+    data: products,
+  });
+};
+
+exports. updateProduct = (req, res) => {
+  var product = req.product; // req.product come from check product middleware
+  product.name = req.body.name;
+  product.price = req.body.price;
+  fs.writeFileSync("./products.json", JSON.stringify(products));
+  console.log(product.name);
+  res.status(200).json({
+    status: "success",
+    product: product,
+    data: products,
+  });
+};
+
+exports.getProduct = (req, res) => {
+  res.status(200).json({
+    product: req.product,
+  });
+};
+
+exports. deleteProduct = (req, res) => {};
+
+//middleware check if product is found or not
+exports.checkProduct = (req, res, next) => {
+  var id = Number(req.params.id);
+  var product = products.find((el) => el.id === id);
+  if (!product) {
+    return res.status(404).json({
+      //using return to avoid to continue next()
+      status: "fail",
+      message: "this id isn't found",
+    });
+  }
+
+  req.product = product; //put product inside request
+
+  next();
+};
+
+

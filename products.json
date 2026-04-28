@@ -1,0 +1,10 @@
+[
+  { "id": 1, "name": "cheese", "price": 1000 },
+  { "id": 2, "name": "Rice", "price": 500 },
+  { "id": 3, "name": "salt", "price": 100 },
+  { "id": 4, "name": "flour", "price": 10000 },
+  { "id": 5, "name": "Milk", "price": 400 },
+  { "id": 6, "name": "suger", "price": 400 },
+  { "id": 7, "name": "flour", "price": 10000 },
+  { "id": 8, "name": "suger", "price": 400 }
+]
